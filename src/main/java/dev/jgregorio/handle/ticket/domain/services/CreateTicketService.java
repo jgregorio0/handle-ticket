@@ -11,7 +11,7 @@ public class CreateTicketService implements CreateTicketCase {
     private CreateTicketPort createTicketPort;
 
     @Override
-    public void createTicket(Ticket ticket) {
-        createTicketPort.createTicket(ticket);
+    public Ticket createTicket(Ticket ticket) {
+        return createTicketPort.createTicket(ticket);
     }
 }
