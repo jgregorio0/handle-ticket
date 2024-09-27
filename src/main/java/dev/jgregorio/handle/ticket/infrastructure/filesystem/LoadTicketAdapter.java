@@ -7,8 +7,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
-import java.io.IOException;
-
 @AllArgsConstructor
 @Component
 public class LoadTicketAdapter implements LoadTicketPort {
@@ -16,7 +14,7 @@ public class LoadTicketAdapter implements LoadTicketPort {
     FileSystemLoader fileSystemLoader;
 
     @Override
-    public LoadedTicket loadTicket(Ticket ticket) throws IOException {
+    public LoadedTicket loadTicket(Ticket ticket) {
         if (ObjectUtils.isEmpty(ticket.getImagePath())) {
             throw new IllegalArgumentException("Ticket image path must not be empty");
         }
