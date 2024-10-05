@@ -1,37 +1,64 @@
 package dev.jgregorio.handle.ticket;
 
+import com.google.cloud.vision.v1.EntityAnnotation;
+import dev.jgregorio.handle.ticket.common.config.TicketConfig;
 import dev.jgregorio.handle.ticket.domain.model.LoadedTicket;
-import dev.jgregorio.handle.ticket.domain.model.ParsedTicket;
-import dev.jgregorio.handle.ticket.domain.model.Ticket;
-import dev.jgregorio.handle.ticket.infrastructure.api.GoogleVisionApi;
-import dev.jgregorio.handle.ticket.infrastructure.api.ParseTicketAdapter;
-import dev.jgregorio.handle.ticket.infrastructure.filesystem.FileSystemLoader;
-import dev.jgregorio.handle.ticket.infrastructure.filesystem.LoadTicketAdapter;
+import dev.jgregorio.handle.ticket.infrastructure.adapters.out.api.GoogleVisionApi;
+import dev.jgregorio.handle.ticket.infrastructure.adapters.out.ParseTicketAdapter;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
 
 
-//@SpringBootTest
+@SpringBootTest(classes = TicketConfig.class)
 class ParseTicketAdapterTest {
 
-    private LoadTicketAdapter loadTicketAdapter = new LoadTicketAdapter(
-            new FileSystemLoader());
-    ParseTicketAdapter parseTicketAdapter = new ParseTicketAdapter(
-            new GoogleVisionApi());
+    @Mock
+    private GoogleVisionApi googleVisionApi;
+
+    @InjectMocks
+    private ParseTicketAdapter parseTicketAdapter;
 
     @Test
-    void givenImage_whenAnnotateImage_thenReturn() throws IOException {
-        // GIVEN ticket with image in classpath
-        Ticket ticket = Ticket.builder().
-                imagePath("/ticket-mercadona.jpg").build();
-        // WHEN parse data
-        LoadedTicket loadedTicket = loadTicketAdapter.loadTicket(ticket);
-        ParsedTicket parsedTicket = parseTicketAdapter.parseTicket(loadedTicket);
-        // THEN data parsed is not null
-        assertNotNull(parsedTicket.getData());
+    void givenTicketImageInputAndApiJsonOutput_whenParseTicket_thenAnnotateImage() throws IOException {
+        // GIVEN
+        // input loaded ticket
+//        byte[] data = new FileSystemLoader()
+//                .readFileBytesByPath(
+//                        TestConstants.class.getResource(
+//                                TestConstants.TICKET_PATH));
+        // GIVEN
+        // input ticket data
+        byte[] inputData = "fake-input-data".getBytes();
+        // output json response from Google Vision API
+//        List<EntityAnnotation> jsonResponse = new Gson()
+//                .fromJson(
+//                        new FileReader(
+//                                TestConstants.class.getResource(
+//                                        TestConstants.TICKET_JSON_PATH).getPath()),
+//                        new TypeToken<List<EntityAnnotation>>() {
+//                        }.getType());
+        List<EntityAnnotation> outputData = List.of(
+                EntityAnnotation.newBuilder().build(),
+                EntityAnnotation.newBuilder().build());
+        // mock annotate image
+        given(googleVisionApi.annotateImage(inputData))
+                .willReturn(outputData);
+        // WHEN
+        // parse ticket
+        parseTicketAdapter.parseTicket(LoadedTicket.builder()
+                .data(inputData).build());
+        // THEN
+        // Google Vision API annotates image
+        then(googleVisionApi)
+                .should().annotateImage(inputData);
     }
 
 }
