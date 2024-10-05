@@ -1,0 +1,17 @@
+spring:
+  application.name: handle-ticket
+
+jpa:
+  properties:
+    hibernate:
+      # Hibernate dialect for H2 database
+      dialect: org.hibernate.dialect.H2Dialect
+      # Enable SQL formatting for better readability
+      format_sql: true
+
+h2:
+  console:
+    # Enable the H2 web console
+    enabled: true
+    # Path for accessing the H2 web console
+    path: /h2-console

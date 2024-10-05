@@ -1,10 +1,10 @@
-package dev.jgregorio.handle.ticket.domain.model;
+package dev.jgregorio.handle.ticket.domain;
 
-import dev.jgregorio.handle.ticket.infrastructure.database.TicketEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.net.URL;
 import java.util.Date;
 
 @Getter
@@ -13,7 +13,7 @@ import java.util.Date;
 public class Ticket {
 
     private Long id;
-    private String imagePath;
+    private URL source;
     private Date created;
 
 }
