@@ -1,9 +1,9 @@
 package dev.jgregorio.handle.ticket;
 
 import dev.jgregorio.handle.ticket.domain.model.LoadedTicket;
-import dev.jgregorio.handle.ticket.domain.model.Ticket;
-import dev.jgregorio.handle.ticket.infrastructure.filesystem.FileSystemLoader;
-import dev.jgregorio.handle.ticket.infrastructure.filesystem.LoadTicketAdapter;
+import dev.jgregorio.handle.ticket.domain.Ticket;
+import dev.jgregorio.handle.ticket.infrastructure.adapters.out.filesystem.FileSystemLoader;
+import dev.jgregorio.handle.ticket.infrastructure.adapters.out.LoadTicketAdapter;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
@@ -22,8 +22,10 @@ class LoadTicketAdapterTest {
     @Test
     void givenExistingImageTicket_whenLoadTicket_thenLoadedTicketDataIsNotNull() throws IOException {
         // GIVEN ticket with image in classpath
-        Ticket ticket = Ticket.builder().
-                imagePath("/ticket-mercadona.jpg").build();
+        Ticket ticket = Ticket.builder()
+                .source(TestConstants.class.getResource(
+                        TestConstants.TICKET_PATH))
+                .build();
         // WHEN load data
         LoadedTicket loadedData = loadTicketAdapter
                 .loadTicket(ticket);
@@ -33,9 +35,11 @@ class LoadTicketAdapterTest {
 
     @Test
     void givenNonExistingImageTicket_whenLoadTicket_thenErrorIsThrown() {
-        // GIVEN ticket with image in classpath
-        Ticket ticket = Ticket.builder().
-                imagePath("/non-existing-image.jpg").build();
+        // GIVEN ticket that not exists image in classpath
+        Ticket ticket = Ticket.builder()
+                .source(TestConstants.class.getResource(
+                        TestConstants.NON_EXISTING_TICKET_PATH))
+                .build();
         // WHEN load ticket data
         Executable loadTicketExecutable = () -> loadTicketAdapter
                 .loadTicket(ticket);

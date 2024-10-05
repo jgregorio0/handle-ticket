@@ -1,7 +1,7 @@
 package dev.jgregorio.handle.ticket.application.ports.in;
 
 import dev.jgregorio.handle.ticket.domain.model.LoadedTicket;
-import dev.jgregorio.handle.ticket.domain.model.Ticket;
+import dev.jgregorio.handle.ticket.domain.Ticket;
 
 import java.io.IOException;
 
