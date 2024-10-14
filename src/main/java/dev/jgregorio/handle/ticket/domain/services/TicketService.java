@@ -9,11 +9,13 @@ import dev.jgregorio.handle.ticket.common.exception.CreateTicketCaseException;
 import dev.jgregorio.handle.ticket.domain.Ticket;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.InputStreamSource;
+import org.springframework.stereotype.Service;
 
 import java.net.URL;
-import java.util.Date;
+import java.time.LocalDate;
 
 @AllArgsConstructor
+@Service
 public class TicketService implements CreateTicketCase, CreateImageCase {
 
     private CreateTicketPort createTicketPort;
@@ -29,7 +31,7 @@ public class TicketService implements CreateTicketCase, CreateImageCase {
             return createTicketPort.createTicket(
                     Ticket.builder()
                             .source(createImage(ticketSource, contentType))
-                            .created(new Date())
+                            .createdAt(LocalDate.now())
                             .build());
         } catch (Exception e) {
             // TODO log error

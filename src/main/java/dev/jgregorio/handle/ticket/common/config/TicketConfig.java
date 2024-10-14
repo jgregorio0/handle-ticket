@@ -40,5 +40,4 @@ public class TicketConfig {
         return new CreateImageAdapter(
                 new FileSystemWriter());
     }
-
 }
