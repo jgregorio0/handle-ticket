@@ -1,11 +1,13 @@
 package dev.jgregorio.handle.ticket.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import dev.jgregorio.handle.ticket.common.utils.DateUtils;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.net.URL;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -14,6 +16,7 @@ public class Ticket {
 
     private Long id;
     private URL source;
-    private Date created;
+    @JsonFormat(pattern = DateUtils.DATE_PATTERN)
+    private LocalDate createdAt;
 
 }
