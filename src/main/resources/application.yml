@@ -8,10 +8,22 @@ jpa:
       dialect: org.hibernate.dialect.H2Dialect
       # Enable SQL formatting for better readability
       format_sql: true
-
+      # Hibernate updates the existing database schema based on the entity mappings
+      ddl-auto: update
 h2:
   console:
     # Enable the H2 web console
     enabled: true
     # Path for accessing the H2 web console
     path: /h2-console
+
+# logging debug
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
