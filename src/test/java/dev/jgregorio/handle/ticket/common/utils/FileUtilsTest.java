@@ -11,9 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class FileUtilsTest {
 
     @Test
-    void giveExistingFile_whenRead_ThenReturnString() throws IOException {
-        String fileString = FileUtils.readLargeFileStringByUrl(
-                TestConstants.class.getResource(TestConstants.TICKET_PATH));
-        assertNotNull(fileString);
+    void giveExistingFile_whenRead_ThenReturnString() {
+        assertNotNull(FileUtils.readFileAsBytesBuffered(
+                TestConstants.TICKET_URL));
     }
 }
