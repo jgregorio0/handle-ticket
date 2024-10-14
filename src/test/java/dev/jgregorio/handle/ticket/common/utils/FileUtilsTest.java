@@ -3,8 +3,6 @@ package dev.jgregorio.handle.ticket.common.utils;
 import dev.jgregorio.handle.ticket.TestConstants;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 

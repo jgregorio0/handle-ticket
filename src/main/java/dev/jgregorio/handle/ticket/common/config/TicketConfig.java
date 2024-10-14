@@ -1,14 +1,14 @@
 package dev.jgregorio.handle.ticket.common.config;
 
 import dev.jgregorio.handle.ticket.application.mappers.TicketMapper;
-import dev.jgregorio.handle.ticket.infrastructure.adapters.out.api.GoogleVisionApi;
-import dev.jgregorio.handle.ticket.infrastructure.adapters.out.ParseTicketAdapter;
-import dev.jgregorio.handle.ticket.infrastructure.adapters.out.CreateTicketAdapter;
-import dev.jgregorio.handle.ticket.infrastructure.adapters.out.database.TicketRepository;
 import dev.jgregorio.handle.ticket.infrastructure.adapters.out.CreateImageAdapter;
+import dev.jgregorio.handle.ticket.infrastructure.adapters.out.CreateTicketAdapter;
+import dev.jgregorio.handle.ticket.infrastructure.adapters.out.LoadTicketAdapter;
+import dev.jgregorio.handle.ticket.infrastructure.adapters.out.ParseTicketAdapter;
+import dev.jgregorio.handle.ticket.infrastructure.adapters.out.api.GoogleVisionApi;
+import dev.jgregorio.handle.ticket.infrastructure.adapters.out.database.TicketRepository;
 import dev.jgregorio.handle.ticket.infrastructure.adapters.out.filesystem.FileSystemLoader;
 import dev.jgregorio.handle.ticket.infrastructure.adapters.out.filesystem.FileSystemWriter;
-import dev.jgregorio.handle.ticket.infrastructure.adapters.out.LoadTicketAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -35,8 +35,7 @@ public class TicketConfig {
     }
 
     @Bean
-    public CreateImageAdapter createImageAdapter(
-            TicketRepository ticketRepository, TicketMapper ticketMapper) {
+    public CreateImageAdapter createImageAdapter() {
         return new CreateImageAdapter(
                 new FileSystemWriter());
     }
